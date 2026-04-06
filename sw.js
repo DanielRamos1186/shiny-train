@@ -1,4 +1,4 @@
-const CACHE_NAME = 'chaos-gacha-v2'; // Changed to v2 to force an update
+const CACHE_NAME = 'chaos-gacha-v3'; // Changed to v2 to force an update
 const ASSETS_TO_CACHE = [
   './',             // This is the crucial fix for GitHub Pages
   './index.html',
