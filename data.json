@@ -1,0 +1,9 @@
+{
+  "ability": [
+    { "name": "Fireball", "rarity": 2.5, "description": "Shoots a ball of fire." },
+    { "name": "Telekinesis", "rarity": 5.1, "description": "Move objects with your mind." }
+  ],
+  "item": [
+    { "name": "Rusty Sword", "rarity": 0.8, "description": "Barely cuts grass." }
+  ]
+}
