@@ -1,4 +1,4 @@
-const CACHE_NAME = 'chaos-gacha-v4'; 
+const CACHE_NAME = 'chaos-gacha-v5'; 
 const ASSETS_TO_CACHE = [
   './',             
   './index.html',
