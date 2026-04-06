@@ -1,6 +1,6 @@
-const CACHE_NAME = 'chaos-gacha-v3'; // Changed to v2 to force an update
+const CACHE_NAME = 'chaos-gacha-v4'; 
 const ASSETS_TO_CACHE = [
-  './',             // This is the crucial fix for GitHub Pages
+  './',             
   './index.html',
   './app.js',
   './data.json',
@@ -16,7 +16,6 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('activate', event => {
-  // Delete old caches when we update the version number
   event.waitUntil(
     caches.keys().then(keyList => {
       return Promise.all(keyList.map(key => {
@@ -29,12 +28,30 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
+  // Special handling for data.json: Network First
+  if (event.request.url.includes('data.json')) {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          // If successful, update the cache
+          const clonedResponse = response.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, clonedResponse);
+          });
+          return response;
+        })
+        .catch(() => {
+          // If network fails, return cached version
+          return caches.match(event.request);
+        })
+    );
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then(response => {
-      // Return cached version if found, otherwise fetch from network
       return response || fetch(event.request);
     }).catch(() => {
-      // If BOTH fail (offline and not in cache), fallback to index.html
       return caches.match('./index.html');
     })
   );
